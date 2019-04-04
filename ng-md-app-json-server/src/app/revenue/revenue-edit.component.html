@@ -1,0 +1,113 @@
+<div id="home-content">
+
+    <mat-card-header>
+        <mat-card-title class="view-card-title">
+            <h1>{{pageTitle}}</h1>
+            <mat-error *ngIf='errorMessage'>{{errorMessage}}</mat-error>
+        </mat-card-title>
+    </mat-card-header>
+
+    <form novalidate (ngSubmit)="saveRevenue()" [formGroup]="revenueForm" style="height: 100%; overflow-y: auto">
+
+        <mat-toolbar-row>
+            <!-- <span class="view-card-title"> {{pageTitle}}</span> -->
+            <span class="title-spacer"></span>
+
+            <mat-card-actions>
+                <button mat-mini-fab class="primary" style="margin-right:10px; background-color:darkgray" type="submit" [disabled]='!revenueForm.valid'>
+                    <mat-icon>save</mat-icon>
+                </button>
+                <button mat-mini-fab class="" style="margin-right:10px; " [routerLink]="['/revenues']">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+
+            </mat-card-actions>
+
+        </mat-toolbar-row>
+
+
+
+
+        <div class="form-card">
+
+            <mat-form-field class="form-field">
+                <mat-label>Select Revenue Type (required)</mat-label>
+                <mat-select id="type" formControlName="type" (change)="updateValidatorsOnType()">
+                    <mat-option *ngFor="let revenType of revenueTypeList" value="{{revenType}}">{{revenType}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="displayMessage.type">
+                    {{displayMessage.type}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" *ngIf="(this.revenueForm.get('type').value!='Chanda')">
+                <mat-label>Select Guest (y/n) Status (required)</mat-label>
+                <mat-select id="isGuest" formControlName="isGuest" (change)="updateValidatorsOnGuest()">
+                    <mat-option *ngFor="let yn of yesNoList" value="{{yn}}">{{yn}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="displayMessage.isGuest">
+                    {{displayMessage.isGuest}}
+                </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="form-field" *ngIf="(this.revenueForm.get('isGuest').value=='Yes')">
+                <input matInput id="guestName" type="text" placeholder="Guest Name (required)" formControlName="guestName" />
+                <mat-error *ngIf="displayMessage.guestName">
+                    {{displayMessage.guestName}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" *ngIf="(this.revenueForm.get('isGuest').value!='Yes')">
+                <mat-label>Select Member (required)</mat-label>
+                <mat-select id="memberId" formControlName="memberId">
+                    <mat-option *ngFor="let member of memberList" value="{{member.id}}">{{member.name}}-{{member.mobileNumber}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="displayMessage.memberId">
+                    {{displayMessage.memberId}}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- <mat-form-field class="form-field" *ngIf="(this.revenueForm.get('isGuest').value=='No')">
+                <mat-label>Select Donated By - Member Name (required)</mat-label>
+                <mat-select formControlName="donatedBy" #singleSelect>
+                    <mat-option>
+                        <ngx-mat-select-search></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let member of memberList | async" value="member.id">
+                        {{member.name}}-{{member.mobileNumber}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
+
+            <mat-form-field class="form-field">
+                <input matInput id="amount" type="text" placeholder="Amount (required)" formControlName="amount" />
+                <mat-error *ngIf="displayMessage.amount">
+                    {{displayMessage.amount}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <input matInput id="paidDate" formControlName="paidDate" [matDatepicker]="paidDate" placeholder="Paid Date (required)">
+                <mat-datepicker-toggle matSuffix [for]="paidDate"></mat-datepicker-toggle>
+                <mat-datepicker #paidDate></mat-datepicker>
+            </mat-form-field>
+
+
+            <mat-form-field class="form-field" *ngIf="(this.revenueForm.get('type').value=='Chanda')">
+                <input matInput id="fromDate" formControlName="fromDate" [matDatepicker]="fromDate" placeholder="From Date (required)">
+                <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                <mat-datepicker #fromDate></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" *ngIf="(this.revenueForm.get('type').value=='Chanda')">
+                <input matInput id="toDate" formControlName="toDate" [matDatepicker]="toDate" placeholder="To Date (required)">
+                <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                <mat-datepicker #toDate></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+
+    </form>
+
+</div>

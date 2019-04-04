@@ -1,0 +1,128 @@
+<mat-card>
+
+    <mat-card-header>
+        <mat-card-title class="view-card-title">
+            <h1>{{pageTitle }}</h1>
+        </mat-card-title>
+    </mat-card-header>
+
+
+
+    <mat-grid-list cols="12" rowHeight="40px" *ngIf="(member!=null)">
+        <!--  -->
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Name:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{member.name}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Mobile Number:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{member.mobileNumber}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Gender:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{member.gender}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Area:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{member.area}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Address:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{member.address}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Age:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{member.age}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Married:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{member.married}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Occupation:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{member.occupation}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Income:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{member.income}}</span>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <br />
+    <br />
+    <span class="view-label"> Family Memers Details:</span>
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="famName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Family Member Name </mat-header-cell>
+            <mat-cell *matCellDef="let member"> {{member.famName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="relation">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Relation </mat-header-cell>
+            <mat-cell *matCellDef="let member"> {{member.relation}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="famAge">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+            <mat-cell *matCellDef="let member"> {{member.famAge}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="famMarried">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Married </mat-header-cell>
+            <mat-cell *matCellDef="let member"> {{member.famMarried}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="famEmployed">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Employed </mat-header-cell>
+            <mat-cell *matCellDef="let member"> {{member.famEmployed}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="famEducation">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Education </mat-header-cell>
+            <mat-cell *matCellDef="let member"> {{member.famEducation}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="familyMembersDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: familyMembersDisplayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10]">
+    </mat-paginator>
+
+
+    <mat-card-actions>
+        <button mat-raised-button (click)="onBack()" color="primary">
+            <mat-icon>back</mat-icon>
+            Back
+        </button>
+        <button mat-raised-button color="warn" [routerLink]="['/memberEdit', this.member.id]" *ngIf="(member!=null)">
+            <mat-icon>edit</mat-icon>
+            Edit
+        </button>
+    </mat-card-actions>
+</mat-card>

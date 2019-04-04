@@ -1,0 +1,156 @@
+<div id="home-content">
+
+    <mat-card-header>
+        <mat-card-title class="view-card-title">
+            <h1>{{pageTitle}}</h1>
+            <mat-error *ngIf='errorMessage'>{{errorMessage}}</mat-error>
+        </mat-card-title>
+    </mat-card-header>
+
+    <form novalidate (ngSubmit)="saveMember()" [formGroup]="memberForm" style="height: 100%; overflow-y: auto">
+
+        <mat-toolbar-row>
+            <!-- <span class="view-card-title"> {{pageTitle}}</span> -->
+            <span class="title-spacer"></span>
+
+            <mat-card-actions>
+                <button mat-mini-fab class="primary" style="margin-right:10px; background-color:darkgray" type="submit" [disabled]='!memberForm.valid'>
+                    <mat-icon>save</mat-icon>
+                </button>
+                <button mat-mini-fab class="" style="margin-right:10px; " [routerLink]="['/members']">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+
+            </mat-card-actions>
+
+        </mat-toolbar-row>
+
+
+
+
+        <div class="form-card">
+            <mat-form-field class="form-field">
+                <input matInput id="name" type="text" placeholder="Name (required)" formControlName="name" />
+                <mat-error *ngIf="displayMessage.name">
+                    {{displayMessage.name}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <input matInput id="mobileNumber" type="text" placeholder="Mobile Number (required)" formControlName="mobileNumber" />
+                <mat-error *ngIf="displayMessage.mobileNumber">
+                    {{displayMessage.mobileNumber}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <mat-label>Select Gender (required)</mat-label>
+                <mat-select id="gender" formControlName="gender">
+                    <mat-option *ngFor="let genOpt of genderList" value="{{genOpt}}">{{genOpt}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="displayMessage.gender">
+                    {{displayMessage.gender}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <mat-label>Select Area (required)</mat-label>
+                <mat-select id="area" formControlName="area">
+                    <mat-option *ngFor="let areaOpt of areaList" value="{{areaOpt}}">{{areaOpt}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="displayMessage.area">
+                    {{displayMessage.area}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <input matInput id="address" type="text" placeholder="Address (required)" formControlName="address" />
+                <mat-error *ngIf="displayMessage.address">
+                    {{displayMessage.address}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <input matInput id="age" type="text" placeholder="Age (required)" formControlName="age" />
+                <mat-error *ngIf="displayMessage.age">
+                    {{displayMessage.age}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <mat-label>Select Married (y/n) Status (required)</mat-label>
+                <mat-select id="married" formControlName="married">
+                    <mat-option *ngFor="let yn of yesNoList" value="{{yn}}">{{yn}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="displayMessage.married">
+                    {{displayMessage.married}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <input matInput id="occupation" type="text" placeholder="Occupation (required)" formControlName="occupation" />
+                <mat-error *ngIf="displayMessage.occupation">
+                    {{displayMessage.occupation}}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <input matInput id="income" type="text" placeholder="Income (required)" formControlName="income" />
+                <mat-error *ngIf="displayMessage.income">
+                    {{displayMessage.income}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div formArrayName="familyMemDetails" *ngFor="let familyMem of memberForm.get('familyMemDetails')['controls']; let j = index;">
+            <legend>
+                <h4>FamilyMember {{j+1}}</h4>
+            </legend>
+            <div [formGroupName]="j">
+                <mat-form-field class="form-field">
+                    <input matInput id="famName" type="text" placeholder="Name (required)" formControlName="famName" />
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <mat-label>Select Relation (required)</mat-label>
+                    <mat-select id="relation" formControlName="relation">
+                        <mat-option *ngFor="let relaOpt of relationList" value="{{relaOpt}}">{{relaOpt}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <input matInput id="famAge" type="text" placeholder="Age (required)" formControlName="famAge" />
+                    <mat-error *ngIf="displayMessage.age">
+                        {{displayMessage.age}}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <mat-label>Select Married (y/n) Status (required)</mat-label>
+                    <mat-select id="famMarried" formControlName="famMarried">
+                        <mat-option *ngFor="let yn of yesNoList" value="{{yn}}">{{yn}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <mat-label>Select Employed (y/n) Status (required)</mat-label>
+                    <mat-select id="famEmployed" formControlName="famEmployed">
+                        <mat-option *ngFor="let yn of yesNoList" value="{{yn}}">{{yn}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <input matInput id="famEducation" type="text" placeholder="Education (required)" formControlName="famEducation" />
+                </mat-form-field>
+                <span>
+                    <button mat-raised-button color="warn" (click)="deleteFamilyMember(j)">Delete FamilyMember</button>
+                </span>
+            </div>
+        </div>
+        <span>
+            <a mat-raised-button color="primary" (click)="addFamilyMember()">Add FamilyMember</a>
+        </span>
+
+    </form>
+
+</div>

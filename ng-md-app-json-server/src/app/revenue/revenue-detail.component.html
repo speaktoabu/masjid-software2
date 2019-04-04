@@ -1,0 +1,90 @@
+<mat-card>
+
+    <mat-card-header>
+        <mat-card-title class="view-card-title">
+            <h1>{{pageTitle }}</h1>
+        </mat-card-title>
+    </mat-card-header>
+
+
+
+    <mat-grid-list cols="12" rowHeight="40px" *ngIf="(revenue!=null)">
+        <!--  -->
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> ID:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{revenue.id}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Type:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{revenue.type}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" *ngIf="(revenue.isGuest!=null)">
+            <span class="view-label"> isGuest:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3" *ngIf="(revenue.isGuest!=null)">
+            <span class="view-data"> {{revenue.isGuest}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" *ngIf="(revenue.guestName!=null)">
+            <span class="view-label"> Guest Name:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3" *ngIf="(revenue.guestName!=null)">
+            <span class="view-data"> {{revenue.guestName}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" *ngIf="(revenue.member!=null)">
+            <span class="view-label"> Member Name:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3" *ngIf="(revenue.member!=null)">
+            <span class="view-data"> {{member.name}} ({{member.mobileNumber}})</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> Amount:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{revenue.amount}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3">
+            <span class="view-label"> PaidDate:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3">
+            <span class="view-data"> {{revenue.paidDate}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" *ngIf="(revenue.fromDate!=null)">
+            <span class="view-label"> FromDate:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3" *ngIf="(revenue.fromDate!=null)">
+            <span class="view-data"> {{revenue.fromDate}}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" *ngIf="(revenue.toDate!=null)">
+            <span class="view-label"> ToDate:</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3" *ngIf="(revenue.toDate!=null)">
+            <span class="view-data"> {{revenue.toDate}}</span>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+
+
+    <mat-card-actions>
+        <button mat-raised-button (click)="onBack()" color="primary">
+            <mat-icon>back</mat-icon>
+            Back
+        </button>
+        <button mat-raised-button color="warn" [routerLink]="['/revenueEdit', this.revenue.id]"
+            *ngIf="(this.revenue!=null)">
+            <mat-icon>edit</mat-icon>
+            Edit
+        </button>
+    </mat-card-actions>
+</mat-card>
